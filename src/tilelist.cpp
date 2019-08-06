@@ -9,11 +9,7 @@ TileList::TileList() {
 }
 
 TileList::~TileList() {
-    while (front != nullptr) {
-        TileNode* tempFront = front;
-        front = front->next;
-        delete tempFront;
-    }
+    clear();
 }
 
 void TileList::addBack(int x, int y, int width, int height, string color) {
@@ -53,13 +49,16 @@ void TileList::addFront(int x, int y, int width, int height, string color) {
 }
 
 void TileList::clear() {
-    // TODO: write this function
-
+    while (front != nullptr) {
+        TileNode* tempFront = front;
+        front = front->next;
+        delete tempFront;
+    }
+    back = nullptr;
 }
 
 void TileList::debug() {
-    // TODO: write this function (optional)
-
+    // empty function
 }
 
 void TileList::drawAll(GWindow& window) const {

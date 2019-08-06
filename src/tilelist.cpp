@@ -66,21 +66,28 @@ TileNode* TileList::getFront() const {
     return front;
 }
 
-bool TileList::highlight(int x, int y) {
+TileNode* TileList::findTopTile(int x, int y) {
     TileNode* tempFront = front;
     while (tempFront != nullptr) {
         if (tempFront->contains(x, y)) {
-            tempFront->color = "yellow";
-            return true;
+            return tempFront;
         }
         tempFront = tempFront->next;
+    }
+    return nullptr;
+}
+
+bool TileList::highlight(int x, int y) {
+    TileNode* topTile = findTopTile(x, y);
+    if (topTile != nullptr) {
+        topTile->color = "yellow";
+        return true;
     }
     return false;
 }
 
 bool TileList::lower(int x, int y) {
-    // TODO: write this function
-    return false;   // remove this
+    return false;
 }
 
 void TileList::merge(int x, int y) {

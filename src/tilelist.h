@@ -28,7 +28,7 @@ public:
 private:
     TileNode* front;
     TileNode* back;
-
+    TileNode* findTopTile(int x, int y);
 };
 
 #endif // _tilelist_h

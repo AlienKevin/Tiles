@@ -158,8 +158,36 @@ bool TileList::raise(int x, int y) {
 }
 
 bool TileList::remove(int x, int y) {
-    // TODO: write this function
-    return false;   // remove this
+    TileNode* topTile = findTopTile(x, y);
+    if (topTile != nullptr) {
+        /******** only contains a single tile *********/
+        if (topTile == front && topTile == back) {
+            front = nullptr;
+            back = nullptr;
+            return true;
+        }
+        /******** tile is at front *********/
+        if (topTile == front) {
+            front = front->next;
+            front->prev = nullptr;
+            delete topTile;
+            return true;
+        }
+        /******** tile is at back *********/
+        if (topTile == back) {
+            back = back->prev;
+            back->next = nullptr;
+            delete topTile;
+            return true;
+        }
+        /******** tile is in the middle *********/
+        // skipping the tile found
+        topTile->prev->next = topTile->next;
+        topTile->next->prev = topTile->prev;
+        delete topTile;
+        return true;
+    }
+    return false;
 }
 
 int TileList::removeAll(int x, int y) {

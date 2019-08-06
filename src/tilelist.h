@@ -29,6 +29,8 @@ private:
     TileNode* front;
     TileNode* back;
     TileNode* findTopTile(int x, int y);
+    void addBack(TileNode* tile);
+    void addFront(TileNode* tile);
 };
 
 #endif // _tilelist_h

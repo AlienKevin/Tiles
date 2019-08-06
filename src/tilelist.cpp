@@ -17,27 +17,37 @@ TileList::~TileList() {
 }
 
 void TileList::addBack(int x, int y, int width, int height, string color) {
+    TileNode* newNode = new TileNode(x, y, width, height, color);
+    addBack(newNode);
+}
+
+void TileList::addBack(TileNode* tile) {
     if (back == nullptr) {
-        back = new TileNode(x, y, width, height, color);
+        back = tile;
         front = back;
     } else {
         TileNode* oldBack = back;
-        back = new TileNode(x, y, width, height, color);
+        back = tile;
         oldBack->next = back;
         back->prev = oldBack;
     }
 }
 
-void TileList::addFront(int x, int y, int width, int height, string color) {
+void TileList::addFront(TileNode* tile) {
     if (front == nullptr) {
-        front = new TileNode(x, y, width, height, color);
+        front = tile;
         back = front;
     } else {
         TileNode* oldFront = front;
-        front = new TileNode(x, y, width, height, color);
+        front = tile;
         oldFront->prev = front;
         front->next = oldFront;
     }
+}
+
+void TileList::addFront(int x, int y, int width, int height, string color) {
+    TileNode* newNode = new TileNode(x, y, width, height, color);
+    addFront(newNode);
 }
 
 void TileList::clear() {
@@ -87,6 +97,29 @@ bool TileList::highlight(int x, int y) {
 }
 
 bool TileList::lower(int x, int y) {
+    TileNode* topTile = findTopTile(x, y);
+    if (topTile != nullptr) {
+        /******** tile is at the back *********/
+        // tile is already lowered
+        if (topTile == back) {
+            return true;
+        }
+        /******** tile is at the front *********/
+        // no previous tile
+        if (topTile == front) {
+            front = topTile->next;
+            front->prev = nullptr;
+            addBack(topTile);
+            return true;
+        }
+        /******** tile is in the middle *********/
+        // skipping the tile found
+        topTile->prev->next = topTile->next;
+        topTile->next->prev = topTile->prev;
+        // move the tile to back
+        addBack(topTile);
+        return true;
+    }
     return false;
 }
 

@@ -30,6 +30,7 @@ void TileList::addBack(TileNode* tile) {
         back = tile;
         oldBack->next = back;
         back->prev = oldBack;
+        back->next = nullptr;
     }
 }
 
@@ -42,6 +43,7 @@ void TileList::addFront(TileNode* tile) {
         front = tile;
         oldFront->prev = front;
         front->next = oldFront;
+        front->prev = nullptr;
     }
 }
 
@@ -129,8 +131,30 @@ void TileList::merge(int x, int y) {
 }
 
 bool TileList::raise(int x, int y) {
-    // TODO: write this function
-    return false;   // remove this
+    TileNode* topTile = findTopTile(x, y);
+    if (topTile != nullptr) {
+        /******** tile is at the front *********/
+        // tile is already raised
+        if (topTile == front) {
+            return true;
+        }
+        /******** tile is at the back *********/
+        // no next tile
+        if (topTile == back) {
+            back = topTile->prev;
+            back->next = nullptr;
+            addFront(topTile);
+            return true;
+        }
+        /******** tile is in the middle *********/
+        // skipping the tile found
+        topTile->prev->next = topTile->next;
+        topTile->next->prev = topTile->prev;
+        // move the tile to front
+        addFront(topTile);
+        return true;
+    }
+    return false;
 }
 
 bool TileList::remove(int x, int y) {

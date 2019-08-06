@@ -52,13 +52,11 @@ void TileList::drawAll(GWindow& window) const {
 }
 
 TileNode* TileList::getBack() const {
-    // TODO: write this function
-    return nullptr;   // remove this
+    return back;
 }
 
 TileNode* TileList::getFront() const {
-    // TODO: write this function
-    return nullptr;   // remove this
+    return front;
 }
 
 bool TileList::highlight(int x, int y) {

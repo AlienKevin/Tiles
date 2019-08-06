@@ -1,5 +1,3 @@
-// This is the H file you will edit and turn in. (TODO: Remove this comment!)
-
 #ifndef _tilelist_h
 #define _tilelist_h
 
@@ -28,9 +26,8 @@ public:
     int removeAll(int x, int y);
 
 private:
-    // TODO: add specified member variable
-    
-    // TODO: add any helper functions necessary
+    TileNode* front;
+    TileNode* back;
 
 };
 

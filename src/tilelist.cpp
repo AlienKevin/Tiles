@@ -1,16 +1,19 @@
-// This is the CPP file you will edit and turn in. (TODO: Remove this comment!)
-
 #include "tilelist.h"
 #include <algorithm>
 #include "strlib.h"
 using namespace std;
 
 TileList::TileList() {
-    // TODO: write this constructor
+    front = nullptr;
+    back = nullptr;
 }
 
 TileList::~TileList() {
-    // TODO: write this destructor
+    while (front != nullptr) {
+        TileNode* tempFront = front;
+        front = front->next;
+        delete tempFront;
+    }
 }
 
 void TileList::addBack(int x, int y, int width, int height, string color) {
@@ -19,8 +22,15 @@ void TileList::addBack(int x, int y, int width, int height, string color) {
 }
 
 void TileList::addFront(int x, int y, int width, int height, string color) {
-    // TODO: write this function
-    
+    if (front == nullptr) {
+        front = new TileNode(x, y, width, height, color);
+        back = front;
+    } else {
+        TileNode* oldFront = front;
+        front = new TileNode(x, y, width, height, color);
+        oldFront->prev = front;
+        front->next = oldFront;
+    }
 }
 
 void TileList::clear() {
@@ -34,8 +44,11 @@ void TileList::debug() {
 }
 
 void TileList::drawAll(GWindow& window) const {
-    // TODO: write this function
-
+    TileNode* tempBack = back;
+    while (tempBack != nullptr) {
+        tempBack->draw(window);
+        tempBack = tempBack->prev;
+    }
 }
 
 TileNode* TileList::getBack() const {

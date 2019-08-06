@@ -29,6 +29,7 @@ private:
     TileNode* front;
     TileNode* back;
     TileNode* findTopTile(int x, int y);
+    bool remove(TileNode* tile);
     void addBack(TileNode* tile);
     void addFront(TileNode* tile);
 };

@@ -17,8 +17,15 @@ TileList::~TileList() {
 }
 
 void TileList::addBack(int x, int y, int width, int height, string color) {
-    // TODO: write this function
-    
+    if (back == nullptr) {
+        back = new TileNode(x, y, width, height, color);
+        front = back;
+    } else {
+        TileNode* oldBack = back;
+        back = new TileNode(x, y, width, height, color);
+        oldBack->next = back;
+        back->prev = oldBack;
+    }
 }
 
 void TileList::addFront(int x, int y, int width, int height, string color) {

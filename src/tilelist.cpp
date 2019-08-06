@@ -67,8 +67,15 @@ TileNode* TileList::getFront() const {
 }
 
 bool TileList::highlight(int x, int y) {
-    // TODO: write this function
-    return false;   // remove this
+    TileNode* tempFront = front;
+    while (tempFront != nullptr) {
+        if (tempFront->contains(x, y)) {
+            tempFront->color = "yellow";
+            return true;
+        }
+        tempFront = tempFront->next;
+    }
+    return false;
 }
 
 bool TileList::lower(int x, int y) {

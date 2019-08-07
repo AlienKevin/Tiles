@@ -1,3 +1,14 @@
+/**
+ * Tiles assignment for CS106B at Stanford Summer Session 2019.
+ * Author: Kevin Li
+ * Description:
+ * This program simulates a graphic window manager of an operating sytem
+ * and allows users to move windows (or tiles) to the front, back, highlight a window,
+ * remove a window, merge multiple windows under the cursor.
+ * Implementation:
+ * Tiles are stored as a doubly-linked list with its x and y coordinate
+ * on screen, width, height, and color.
+ */
 #include "tilelist.h"
 #include <algorithm>
 #include "strlib.h"

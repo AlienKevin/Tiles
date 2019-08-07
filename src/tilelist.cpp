@@ -125,8 +125,42 @@ bool TileList::lower(int x, int y) {
 }
 
 void TileList::merge(int x, int y) {
-    // TODO: write this function
-    
+    TileNode* topTile = front;
+    std::string topColor = "";
+    int minX = 0;
+    int maxX = 0;
+    int minY = 0;
+    int maxY = 0;
+    while (topTile != nullptr) {
+        if (topTile->contains(x, y)) {
+            int topMinX = topTile->x;
+            int topMinY = topTile->y;
+            int topWidth =topTile->width;
+            int topHeight = topTile->height;
+            int topMaxX = topMinX + topWidth;
+            int topMaxY = topMinY + topHeight;
+            if (topColor == "") {
+                topColor = topTile->color;
+                minX = topMinX;
+                maxX = topMaxX;
+                minY = topMinY;
+                maxY = topMaxY;
+            }
+            if (topMinX < minX) {
+                minX = topMinX;
+            } else if (topMaxX > maxX) {
+                maxX = topMaxX;
+            }
+            if (topMinY < minY) {
+                minY = topMinY;
+            } else if (topMaxY > maxY) {
+                maxY = topMaxY;
+            }
+            remove(topTile);
+        }
+        topTile = topTile->next;
+    }
+    addFront(minX, minY, maxX - minX, maxY - minY, topColor);
 }
 
 bool TileList::raise(int x, int y) {
